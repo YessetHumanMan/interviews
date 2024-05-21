@@ -11,6 +11,7 @@ const router = useRouter()
 
 interface IMenuBase {
   name: AppRouterNames;
+  icon: string
   url: string;
   show: ComputedRef<boolean>;
 }
@@ -18,22 +19,32 @@ interface IMenuBase {
 const items = ref<IMenuBase[]>([
   {
     name: "Authorization",
+    icon: 'pi pi-user',
     url: "/auth",
     show: computed((): boolean => !userStore.userId),
   },
   {
-    name: "Add",
+    name: "Home",
+    icon: 'pi pi-plus',
     url: "/",
     show: computed((): boolean => !!userStore.userId),
   },
   {
     name: "List",
     url: "/list",
+    icon: 'pi pi-list',
     show: computed((): boolean => !!userStore.userId),
   },
   {
     name: "Statistic",
     url: "/statistic",
+    icon: 'pi pi-chart-pie',
+    show: computed((): boolean => !!userStore.userId),
+  },
+  {
+    name: "Interviews",
+    url: "/interviews",
+    icon: 'pi pi-graduation-cap',
     show: computed((): boolean => !!userStore.userId),
   },
 ]);
@@ -46,7 +57,7 @@ const signOutBtn = async ():Promise<void> => {
 </script>
 
 <template>
-  <header class="container flex justify-start py-7 px-3 cursor-pointer bg-slate-200 mt-4 rounded-lg">
+  <header class="container flex justify-between py-7 px-3 bg-slate-200 mt-4 rounded-lg">
     <div
       v-for="item in items"
       :key="item.name"
@@ -54,11 +65,14 @@ const signOutBtn = async ():Promise<void> => {
     >
     <router-link :to="item.url">
       <div v-if="item.show">
+      <span :class="item.icon" class="m-3"></span>
         <span>{{ item.name }}</span>
       </div>
     </router-link>
       
     </div>
-    <span v-if="userStore.userId" @click="signOutBtn" class="text-red-500">exit</span>
+    <div>
+      <span v-if="userStore.userId" @click="signOutBtn" class="text-red-500 pi pi-sign-out cursor-pointer m-3 transition hover:text-red-300"><span class="pl-3 font-medium">Exit</span></span>
+    </div>
   </header>
 </template>

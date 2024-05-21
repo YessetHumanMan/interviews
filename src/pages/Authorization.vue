@@ -81,9 +81,11 @@ const signIn = async (): Promise<void> => {
             placeholder="Password*"
           />
           <button
+          
             type="submit"
-            class="text-sm text-slate-900 py-2 px-4 bg-slate-200 rounded-lg hover:bg-slate-400 hover:text-slate-100 transition duration-150 focus:outline-none focus:ring focus:ring-violet-600 active:bg-violet-900"
+            class="btn"
           >
+          <span class="pi pi-user"></span>
             {{ addButton }}
           </button>
         </form>

@@ -1,10 +1,13 @@
 import { initializeApp } from "firebase/app";
 
 import { createApp } from 'vue'
+import PrimeVue from 'primevue/config';
 import { createPinia } from 'pinia'
 import './assets/main.css'
 import App from './App.vue'
 import { router } from './router'
+import 'primeicons/primeicons.css'
+import 'primevue/resources/themes/aura-light-green/theme.css'
 
 const firebaseConfig = {
   apiKey: "AIzaSyDr8bdTrH2DbOrP7h9QWmHL20Ne-BgRjQQ",
@@ -19,6 +22,8 @@ initializeApp(firebaseConfig);
 
 
 const app = createApp(App)
+
+app.use(PrimeVue);
 const pinia = createPinia()
 app.use(router)
 app.use(pinia)

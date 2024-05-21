@@ -2,7 +2,7 @@ import { type RouteRecordRaw, RouteParams } from "vue-router"
 import {createWebHashHistory, createRouter } from 'vue-router'
 import type { RouteLocationNormalized, NavigationGuardNext } from "vue-router"
 import { getAuth, onAuthStateChanged } from 'firebase/auth'
-import Add from './pages/Add.vue'
+
 
 const checkAuth = (to:RouteLocationNormalized, from: RouteLocationNormalized, next: NavigationGuardNext) => {
   let isAuth = false
@@ -20,9 +20,10 @@ const checkAuth = (to:RouteLocationNormalized, from: RouteLocationNormalized, ne
 
 export type AppRouterNames =
 | 'Authorization'
-| 'Add'
+| 'Home'
 | 'List'
 | 'Statistic'
+| 'Interviews'
 
 export const routes: RouteRecordRaw[] = [
 {
@@ -32,9 +33,15 @@ export const routes: RouteRecordRaw[] = [
   
 },
 {
-  name: 'Add',
+  name: 'Home',
   path: '/',
-  component: Add,
+  component: () => import('./pages/PageHome.vue'),
+  beforeEnter: checkAuth
+},
+{
+  name: 'Interviews',
+  path: '/interviews:id',
+  component: () => import('./pages/PageInterviews.vue'),
   beforeEnter: checkAuth
 },
 {
