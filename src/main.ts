@@ -8,6 +8,9 @@ import App from './App.vue'
 import { router } from './router'
 import 'primeicons/primeicons.css'
 import 'primevue/resources/themes/aura-light-green/theme.css'
+import DataTable from "primevue/datatable";
+import Column from "primevue/Column";
+
 
 const firebaseConfig = {
   apiKey: "AIzaSyDr8bdTrH2DbOrP7h9QWmHL20Ne-BgRjQQ",
@@ -28,3 +31,5 @@ const pinia = createPinia()
 app.use(router)
 app.use(pinia)
 app.mount('#app')
+app.component('app-table', DataTable)
+app.component('app-column', Column)

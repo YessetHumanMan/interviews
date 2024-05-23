@@ -1,35 +1,36 @@
 <script setup lang="ts">
 import { ref, computed } from "vue";
 import { getFirestore, setDoc, doc } from 'firebase/firestore'
-import { getAuth } from "firebase/auth";
 import { useRouter } from "vue-router";
 import type { IDataInterviews } from '../dataInterface'
+import { useUserStore } from "../store/user";
 import { v4 as uuidv4 } from 'uuid';
 
 const router = useRouter()
 const db = getFirestore();
+const userStore = useUserStore()
 
 const position = ref<string>("");
 const descrPosition = ref<string>("");
-const nameСandidate = ref<string>("");
+const candidate = ref<string>("");
 const phoneСandidate = ref<string>("");
 const whatsappCandidate = ref<string>("");
 const telegramCandidate = ref<string>("");
 
 const addCreateInterview = async ():Promise<void> => {
   const payload:IDataInterviews = {
-    id: 'uuidv4()',
+    id: uuidv4(),
     position: position.value,
     descrPosition: descrPosition.value,
-    nameСandidate: nameСandidate.value,
+    candidate: candidate.value,
     phoneCandidate: phoneСandidate.value,
     whatsappCandidate: whatsappCandidate.value,
     telegramCandidate: telegramCandidate.value,
     createdAt: new Date()
   }
- const userId = getAuth().currentUser?.uid
- if(userId) {
-  await setDoc(doc(db, `users/${userId}/interviews`, payload.id), payload).then(() => {
+  
+  if(userStore.userId) {
+  await setDoc(doc(db, `users/${userStore.userId}/interviews`, payload.id), payload).then(() => {
     router.push('/list')
   })
  }
@@ -37,7 +38,7 @@ const addCreateInterview = async ():Promise<void> => {
 };
 
 const disbledInterviews = computed<boolean>(() => {
-  return !(position.value && nameСandidate.value && phoneСandidate.value)
+  return !(position.value && candidate.value && phoneСandidate.value)
 });
 </script>
 
@@ -52,7 +53,7 @@ const disbledInterviews = computed<boolean>(() => {
         v-model="descrPosition"
         placeholder="Description of the desired position"
       />
-      <input class="input" type="text" v-model="nameСandidate" placeholder="Name" />
+      <input class="input" type="text" v-model="candidate" placeholder="Name" />
       <input class="input" type="text" v-model="phoneСandidate" placeholder="Phone" />
       <input class="input" type="text" v-model="whatsappCandidate" placeholder="WhatsApp" />
       <input class="input" type="text" v-model="telegramCandidate" placeholder="Telegram" />
