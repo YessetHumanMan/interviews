@@ -72,7 +72,7 @@ const signOutBtn = async ():Promise<void> => {
       
     </div>
     <div>
-      <span v-if="userStore.userId" @click="signOutBtn" class="text-red-500 pi pi-sign-out cursor-pointer m-3 transition hover:text-red-300"><span class="pl-3 font-medium">Exit</span></span>
+      <span v-if="userStore.userId" @click="signOutBtn" class="text-red-500 pi pi-sign-out cursor-pointer m-3 transition hover:text-red-300 hover:translate-x-2"><span class="pl-3 font-medium"></span></span>
     </div>
   </header>
 </template>

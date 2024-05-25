@@ -33,25 +33,83 @@ onMounted(async () => {
   const listInterview: Array<IDataInterviews> = await getAllInterview();
   interviews.value = [...listInterview];
 });
+
+const deliteCurrentInterview = async (id: string):Promise<void> => {
+  await deleteDoc(doc(db, `users/${userStore.userId}/interviews`, id))
+  const listInterview: Array<IDataInterviews> = await getAllInterview();
+    interviews.value = [...listInterview];
+}
 </script>
 
 <template>
   <div class="container">
-    <h1 class="font-bold">List interviews</h1>
+    <div v-if="!interviews.length" class="flex h-screen justify-center items-center font-medium text-lg"><span class="empty-icon pi pi-exclamation-circle mr-2"></span>NO INTERVIEWS...</div>
+    <div v-else class="border border-slate-400 rounded mt-5 shadow-lg">
+      <h1 class="font-medium text-ml my-3 mx-3">LIST INTERVIEWS</h1>
 
-    <app-table :value="interviews"showGridlines tableStyle="min-width: 50rem">
-      
+      <app-table :value="interviews" class="border">
+        <app-column field="candidate" header="Candidate name"></app-column>
         <app-column field="position" header="Position"></app-column>
         <app-column field="descrPosition" header="Description"></app-column>
-        <app-column field="candidate" header="Candidate"></app-column>
         <app-column field="phoneCandidate" header="Phone"></app-column>
-      
-    </app-table>
+        <app-column>
+          <template #body="slotProps">
+            <a
+              v-if="slotProps.data.telegramCandidate"
+              :href="`https://t.me/${slotProps.data.telegramCandidate}`"
+              target="_blank"
+              class="mr-7"
+            >
+              <span class="pi pi-telegram contact_telegram"></span>
+            </a>
+            <a
+              v-if="slotProps.data.telegramCandidate"
+              :href="`https://wa.me/${slotProps.data.whatsappCandidate}`"
+              target="_blank"
+            >
+              <span class="pi pi-whatsapp contact_whatsapp"></span>
+            </a>
+          </template>
+        </app-column>
+        <app-column>
+          <template #body="slotProps">
+            <div class="flex gap-3">
+              <router-link :to="`/interviews/${slotProps.data.id}`">
+              <button class="pi pi-pencil"></button>
+              </router-link>
+              
+              <button class="pi pi-trash trash-icon" @click="deliteCurrentInterview(slotProps.data.id)"></button>
+              
+            </div>
+          </template>
+        </app-column>
+      </app-table>
+    </div>
   </div>
 </template>
 
 <style scoped>
-.bglist {
-  background-color: slategray;
+.contact_telegram {
+  font-size: 20px;
+  color: #24A1DE
+}
+
+.contact_whatsapp {
+  font-size: 20px;
+  color: #25d336
+}
+
+.trash-icon {
+  font-size: 15px;
+  color: red
+}
+.pencil-icon {
+  font-size: 15px;
+  color: #24A1DE
+}
+
+.empty-icon {
+  font-size: 20px;
+  color: red
 }
 </style>

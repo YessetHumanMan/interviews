@@ -1,8 +1,8 @@
 export interface IDataInterviews {
  id: string
+ candidate: string
  position: string
  descrPosition: string
- candidate: string
  phoneCandidate?: string
  whatsappCandidate?: string
  telegramCandidate?: string

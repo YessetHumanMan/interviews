@@ -7,8 +7,7 @@ export default {
       'large': '1170px'
     },
     container: {
-      center: true,
-      padding: '15px'
+      center: true
     },
     extend: {},
   },

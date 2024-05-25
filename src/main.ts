@@ -10,6 +10,8 @@ import 'primeicons/primeicons.css'
 import 'primevue/resources/themes/aura-light-green/theme.css'
 import DataTable from "primevue/datatable";
 import Column from "primevue/Column";
+import ColumnGroup from 'primevue/columngroup';   // optional
+import Row from 'primevue/row';                   // option
 
 
 const firebaseConfig = {
@@ -32,4 +34,6 @@ app.use(router)
 app.use(pinia)
 app.mount('#app')
 app.component('app-table', DataTable)
+app.component('app-group', ColumnGroup)
+app.component('app-row', Row)
 app.component('app-column', Column)
