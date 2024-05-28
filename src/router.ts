@@ -40,7 +40,7 @@ export const routes: RouteRecordRaw[] = [
 },
 {
   name: 'Interviews',
-  path: '/interviews:id',
+  path: '/interviews/:id',
   component: () => import('./pages/PageInterviews.vue'),
   beforeEnter: checkAuth
 },

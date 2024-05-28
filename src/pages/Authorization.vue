@@ -33,8 +33,9 @@ const submitForm = (): void => {
 }
 
 const signUp = async (): Promise<void> => {
-  await createUserWithEmailAndPassword(getAuth(), email.value, password.value)
   try {
+    const auth = getAuth()
+    await createUserWithEmailAndPassword(auth, email.value, password.value)
     router.push('/')
   } catch(error:unknown) {
     if(error instanceof Error) {

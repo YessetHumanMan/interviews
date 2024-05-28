@@ -40,13 +40,7 @@ const items = ref<IMenuBase[]>([
     url: "/statistic",
     icon: 'pi pi-chart-pie',
     show: computed((): boolean => !!userStore.userId),
-  },
-  {
-    name: "Interviews",
-    url: "/interviews",
-    icon: 'pi pi-graduation-cap',
-    show: computed((): boolean => !!userStore.userId),
-  },
+  }
 ]);
 
 const signOutBtn = async ():Promise<void> => {
@@ -58,6 +52,7 @@ const signOutBtn = async ():Promise<void> => {
 
 <template>
   <header class="container flex justify-between py-7 px-3 bg-slate-200 mt-4 rounded-lg">
+    <a href="/"><img src="/public/interview-icon.jpg" width="40" height="40" class="rounded-full" alt=""></a>
     <div
       v-for="item in items"
       :key="item.name"

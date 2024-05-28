@@ -9,6 +9,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "datejs": "^1.0.0-rc3",
+    "dayjs": "^1.11.11",
     "firebase": "^10.11.1",
     "pinia": "^2.1.7",
     "primeicons": "^7.0.0",

@@ -14,18 +14,21 @@ import { ref } from "vue";
 import { useUserStore } from "../store/user";
 
 const userStore = useUserStore();
+const isLoading = ref(true);
 
 const db = getFirestore();
 
 const interviews = ref<IDataInterviews[]>([]);
 
 const getAllInterview = async <T extends IDataInterviews>(): Promise<T[]> => {
+  isLoading.value = true;
   const getData = query(
     collection(db, `users/${userStore.userId}/interviews`),
     orderBy("createdAt", "desc")
   );
 
   const getDocsList = await getDocs(getData);
+isLoading.value = false
   return getDocsList.docs.map((doc) => doc.data() as T);
 };
 
@@ -34,16 +37,23 @@ onMounted(async () => {
   interviews.value = [...listInterview];
 });
 
-const deliteCurrentInterview = async (id: string):Promise<void> => {
-  await deleteDoc(doc(db, `users/${userStore.userId}/interviews`, id))
+const deliteCurrentInterview = async (id: string): Promise<void> => {
+  await deleteDoc(doc(db, `users/${userStore.userId}/interviews`, id));
   const listInterview: Array<IDataInterviews> = await getAllInterview();
-    interviews.value = [...listInterview];
-}
+  interviews.value = [...listInterview];
+};
 </script>
 
 <template>
   <div class="container">
-    <div v-if="!interviews.length" class="flex h-screen justify-center items-center font-medium text-lg"><span class="empty-icon pi pi-exclamation-circle mr-2"></span>NO INTERVIEWS...</div>
+    
+    <app-spinner
+      v-if="!interviews.length"
+      class="flex justify-center items-center font-medium text-lg mt-10"
+    >
+      <span class="empty-icon pi pi-exclamation-circle mr-2"></span>NO
+      INTERVIEWS...
+    </app-spinner>
     <div v-else class="border border-slate-400 rounded mt-5 shadow-lg">
       <h1 class="font-medium text-ml my-3 mx-3">LIST INTERVIEWS</h1>
 
@@ -75,41 +85,43 @@ const deliteCurrentInterview = async (id: string):Promise<void> => {
           <template #body="slotProps">
             <div class="flex gap-3">
               <router-link :to="`/interviews/${slotProps.data.id}`">
-              <button class="pi pi-pencil"></button>
+                <button class="pi pi-pencil"></button>
               </router-link>
-              
-              <button class="pi pi-trash trash-icon" @click="deliteCurrentInterview(slotProps.data.id)"></button>
-              
+
+              <button
+                class="pi pi-trash trash-icon"
+                @click="deliteCurrentInterview(slotProps.data.id)"
+              ></button>
             </div>
           </template>
         </app-column>
       </app-table>
     </div>
-  </div>
+    </div>
 </template>
 
 <style scoped>
 .contact_telegram {
   font-size: 20px;
-  color: #24A1DE
+  color: #24a1de;
 }
 
 .contact_whatsapp {
   font-size: 20px;
-  color: #25d336
+  color: #25d336;
 }
 
 .trash-icon {
   font-size: 15px;
-  color: red
+  color: red;
 }
 .pencil-icon {
   font-size: 15px;
-  color: #24A1DE
+  color: #24a1de;
 }
 
 .empty-icon {
   font-size: 20px;
-  color: red
+  color: red;
 }
 </style>

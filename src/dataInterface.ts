@@ -7,4 +7,14 @@ export interface IDataInterviews {
  whatsappCandidate?: string
  telegramCandidate?: string
  createdAt: Date
+ salaryFrom?: number
+ salaryTo?: number
+ stages?: IDataStage[],
+ result: Offer | Refusal
+}
+
+export interface IDataStage {
+  nameStage: string
+  dateStage: string
+  comments: string
 }
