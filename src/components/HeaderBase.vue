@@ -51,12 +51,12 @@ const signOutBtn = async ():Promise<void> => {
 </script>
 
 <template>
-  <header class="container flex justify-between py-7 px-3 bg-slate-200 mt-4 rounded-lg">
+  <header class="container flex justify-between py-7 px-3 bg-slate-200 mt-4 rounded-lg border-2 border-slate-400">
     <a href="/"><img src="/public/interview-icon.jpg" width="40" height="40" class="rounded-full" alt=""></a>
     <div
       v-for="item in items"
       :key="item.name"
-      class="font-medium transition hover:text-slate-500 mr-10"
+      class="font-medium uppercase text-sm text-slate-800 transition hover:text-slate-500 mr-10"
     >
     <router-link :to="item.url">
       <div v-if="item.show">

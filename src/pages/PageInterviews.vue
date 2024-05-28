@@ -116,13 +116,14 @@ const saveInterview = async ():Promise<void> => {
     </template>
       <div class="flex flex-wrap gap-3">
         <div class="flex align-items-center">
-          <app-radio inputId="interviewResult1" value="отказ" name="result" v-model="interview.result"/>
-          <label for="ingredient1" class="ml-2">отказ</label>
-        </div>
-        <div class="flex align-items-center">
           <app-radio inputId="interviewResult2" value="оффер" name="result" v-model="interview.result"/>
           <label for="ingredient1" class="ml-2">оффер</label>
         </div>
+        <div class="flex align-items-center">
+          <app-radio inputId="interviewResult1" value="отказ" name="result" v-model="interview.result"/>
+          <label for="ingredient1" class="ml-2">отказ</label>
+        </div>
+       
       </div>
       <button class="btn-save" @click="saveInterview">
         <span class="pi pi-check mr-5"></span>Save

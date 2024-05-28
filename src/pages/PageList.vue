@@ -55,7 +55,7 @@ const deliteCurrentInterview = async (id: string): Promise<void> => {
       INTERVIEWS...
     </app-spinner>
     <div v-else class="border border-slate-400 rounded mt-5 shadow-lg">
-      <h1 class="font-medium text-ml my-3 mx-3">LIST INTERVIEWS</h1>
+      <h1 class="font-medium text-ml my-3 mx-3 border-b border-b-slate-800 pb-1"><span class="pi pi-list-check mr-3"></span>LIST INTERVIEWS</h1>
 
       <app-table :value="interviews" class="border">
         <app-column field="candidate" header="Candidate name"></app-column>
@@ -81,6 +81,20 @@ const deliteCurrentInterview = async (id: string): Promise<void> => {
             </a>
           </template>
         </app-column>
+        <app-column header="Salary">
+          <template #body="slotProps">
+         <span v-if="!slotProps.data.salaryFrom">salary not specified</span>
+         <span v-else>{{ slotProps.data.salaryFrom }} - {{ slotProps.data.salaryTo }}</span>
+          </template>
+          </app-column>
+          <app-column header="Result">
+            <template #body="slotProps">
+            <span v-if="!slotProps.data.result">result not specified</span>
+            <template v-else>
+              <app-badge :value="slotProps.data.result === 'Offer' ? 'отказ' : 'офер'"/>
+            </template>
+            </template>
+          </app-column>
         <app-column>
           <template #body="slotProps">
             <div class="flex gap-3">

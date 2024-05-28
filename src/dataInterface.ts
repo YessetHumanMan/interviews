@@ -9,8 +9,8 @@ export interface IDataInterviews {
  createdAt: Date
  salaryFrom?: number
  salaryTo?: number
- stages?: IDataStage[],
- result: Offer | Refusal
+ stages?: IDataStage[]
+ result: 'Offer' | 'Refusal'
 }
 
 export interface IDataStage {

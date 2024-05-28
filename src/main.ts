@@ -13,6 +13,7 @@ import Column from "primevue/Column";
 import Calendar from 'primevue/calendar';
 import RadioButton from 'primevue/radiobutton';
 import ProgressSpinner from 'primevue/progressspinner';
+import Badge from 'primevue/badge';
 
 
 
@@ -40,5 +41,6 @@ app.component('app-column', Column)
 app.component('app-calendar', Calendar)
 app.component('app-radio', RadioButton)
 app.component('app-spinner', ProgressSpinner)
+app.component('app-badge', Badge)
 
 
