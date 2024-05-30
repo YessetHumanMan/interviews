@@ -7,6 +7,7 @@ import {
   getDocs,
   deleteDoc,
   doc,
+  where
 } from "firebase/firestore";
 import { IDataInterviews } from "../dataInterface";
 import { onMounted } from "vue";
@@ -15,18 +16,30 @@ import { useUserStore } from "../store/user";
 
 const userStore = useUserStore();
 const isLoading = ref(true);
+const selectedFilterResalt = ref<string>('');
 
 const db = getFirestore();
 
 const interviews = ref<IDataInterviews[]>([]);
 
-const getAllInterview = async <T extends IDataInterviews>(): Promise<T[]> => {
+const getAllInterview = async <T extends IDataInterviews>(isFilter?: boolean ): Promise<T[]> => {
+  let getData
   isLoading.value = true;
-  const getData = query(
+
+  if(isFilter) {
+    getData = query(
+      collection(db, `users/${userStore.userId}/interviews`),
+      orderBy("createdAt", "desc"),
+      where("result", "==", selectedFilterResalt.value)
+    )
+  } else {
+     getData = query(
     collection(db, `users/${userStore.userId}/interviews`),
     orderBy("createdAt", "desc")
   );
 
+  }
+  
   const getDocsList = await getDocs(getData);
 isLoading.value = false
   return getDocsList.docs.map((doc) => doc.data() as T);
@@ -37,73 +50,93 @@ onMounted(async () => {
   interviews.value = [...listInterview];
 });
 
+const submitFiler = async (): Promise<void> => {
+  const listInterview: Array<IDataInterviews> = await getAllInterview(true);
+  interviews.value = listInterview;
+}
+
+const deleteFiler = async (): Promise<void> => {
+  const listInterview: Array<IDataInterviews> = await getAllInterview(false);
+  interviews.value = listInterview;
+}
+
 const deliteCurrentInterview = async (id: string): Promise<void> => {
   await deleteDoc(doc(db, `users/${userStore.userId}/interviews`, id));
+  isLoading.value = true;
   const listInterview: Array<IDataInterviews> = await getAllInterview();
+    isLoading.value = false
   interviews.value = [...listInterview];
 };
+
+
 </script>
 
 <template>
   <div class="container">
-    
-    <app-spinner
-      v-if="!interviews.length"
-      class="flex justify-center items-center font-medium text-lg mt-10"
-    >
-      <span class="empty-icon pi pi-exclamation-circle mr-2"></span>NO
-      INTERVIEWS...
-    </app-spinner>
-    <div v-else class="border border-slate-400 rounded mt-5 shadow-lg">
-      <h1 class="font-medium text-ml my-3 mx-3 border-b border-b-slate-800 pb-1"><span class="pi pi-list-check mr-3"></span>LIST INTERVIEWS</h1>
+    <div v-if="!interviews.length" class="flex justify-center">
+    <app-spinner v-if="isLoading"/>
+    </div>
+    <div v-else class="bg-sky-950 border border-cyan-400 rounded mt-5 shadow-lg py-4">
+      <h1 class="font-medium text-ml text-cyan-400 my-3 mx-3 border-b border-b-cyan-800 pb-1"><span class="pi pi-list-check mr-3"></span>LIST INTERVIEWS</h1>
+      <div class="flex flex-wrap gap-3 mt-3">
+        <div class="flex align-items-center ml-3 gap-2 my-3">
+          <app-radio inputId="interviewResult1" value="Offer" name="result" v-model="selectedFilterResalt"/>
+          <label for="ingredient1" class="ml-2 text-cyan-400">Offer</label>
+          <app-radio inputId="interviewResult2" value="Refusal" name="result" v-model="selectedFilterResalt"/>
+          <label for="ingredient2" class="ml-2 text-cyan-400">Refusal</label>
+          <button type="button" class="btn-filter-apply" @click="submitFiler()" :disabled="!selectedFilterResalt">Apply</button>
+        <button class="btn-filter-reset" @click="deleteFiler()" :disabled="!selectedFilterResalt">Reset</button>
+        </div>
 
-      <app-table :value="interviews" class="border">
-        <app-column field="candidate" header="Candidate name"></app-column>
-        <app-column field="position" header="Position"></app-column>
-        <app-column field="descrPosition" header="Description"></app-column>
-        <app-column field="phoneCandidate" header="Phone"></app-column>
-        <app-column>
+        
+       
+      <app-table :value="interviews">
+        <app-column field="candidate" header="Candidate" class="border-r border-cyan-400 bg-sky-950 text-cyan-400"></app-column>
+        <app-column field="position" header="Position" class="border-r border-cyan-400 bg-sky-950 text-cyan-400"></app-column>
+        <app-column field="descrPosition" header="Description" class="border-r border-cyan-400 bg-sky-950 text-cyan-400"></app-column>
+        <app-column field="phoneCandidate" header="Phone" class="bg-sky-950 text-cyan-400"></app-column>
+        <app-column class="border-r border-cyan-400 bg-sky-950 text-cyan-400">
           <template #body="slotProps">
             <a
               v-if="slotProps.data.telegramCandidate"
               :href="`https://t.me/${slotProps.data.telegramCandidate}`"
               target="_blank"
-              class="mr-7"
+              class="mr-7 "
             >
-              <span class="pi pi-telegram contact_telegram"></span>
+              <span class="pi pi-telegram contact_telegram animate-pulse"></span>
             </a>
             <a
               v-if="slotProps.data.telegramCandidate"
               :href="`https://wa.me/${slotProps.data.whatsappCandidate}`"
               target="_blank"
             >
-              <span class="pi pi-whatsapp contact_whatsapp"></span>
+              <span class="pi pi-whatsapp contact_whatsapp animate-pulse"></span>
             </a>
           </template>
         </app-column>
-        <app-column header="Salary">
+        <app-column header="Salary" class="border-x border-cyan-400 bg-sky-950 text-cyan-400">
           <template #body="slotProps">
          <span v-if="!slotProps.data.salaryFrom">salary not specified</span>
          <span v-else>{{ slotProps.data.salaryFrom }} - {{ slotProps.data.salaryTo }}</span>
           </template>
           </app-column>
-          <app-column header="Result">
+          <app-column header="Result" class="border-x border-cyan-400 bg-sky-950 text-cyan-400">
             <template #body="slotProps">
             <span v-if="!slotProps.data.result">result not specified</span>
-            <template v-else>
-              <app-badge :value="slotProps.data.result === 'Offer' ? 'отказ' : 'офер'"/>
+            <span v-else>
+              <app-badge :value="slotProps.data.result === 'Offer' ? 'offer' : 'refusal' " :severity="slotProps.data.result === 'Offer' ? 'success' : 'danger'"/>
+            </span>
             </template>
-            </template>
-          </app-column>
-        <app-column>
+          </app-column >
+        <app-column class="bg-sky-950 text-cyan-400">
           <template #body="slotProps">
-            <div class="flex gap-3">
+            <div class="flex gap-3 ">
               <router-link :to="`/interviews/${slotProps.data.id}`">
-                <button class="pi pi-pencil"></button>
+                <button class="pi pi-pencil hover:animate-bounce"></button>
               </router-link>
 
               <button
-                class="pi pi-trash trash-icon"
+                class="pi pi-trash trash-icon hover:animate-bounce"
                 @click="deliteCurrentInterview(slotProps.data.id)"
               ></button>
             </div>
@@ -112,6 +145,7 @@ const deliteCurrentInterview = async (id: string): Promise<void> => {
       </app-table>
     </div>
     </div>
+  </div>
 </template>
 
 <style scoped>

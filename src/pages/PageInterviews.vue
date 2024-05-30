@@ -1,10 +1,9 @@
 <script setup lang="ts">
-import {ref, onMounted, ButtonHTMLAttributes } from 'vue'
+import {ref, onMounted } from 'vue'
 import { getFirestore, doc, updateDoc, getDoc } from 'firebase/firestore';
-import type { IDataInterviews, IDataStage } from '../dataInterface';
+import type { IDataInterviews} from '../dataInterface';
 import { useUserStore } from '../store/user';
 import { useRoute } from 'vue-router'
-import dayjs from 'dayjs';
 
 const userStore = useUserStore()
 const route = useRoute()
@@ -64,10 +63,10 @@ const saveInterview = async ():Promise<void> => {
 <template>
   <app-spinner v-if="isLoading" class="flex justify-center items-center"/>
   <div v-else-if="interview?.id && !isLoading"
-    class="w-1/3 mx-auto py-6 border border-slate-400 mt-10 shadow-xl rounded-md"
+    class="w-1/3 mx-auto border border-cyan-400 mt-10 shadow-xl rounded-md"
   >
-    <h2 class="text-center font-medium">Interviews candidate</h2>
-    <div class="flex flex-col p-5 gap-1 mx-auto">
+    <div class="flex flex-col p-5 gap-1 mx-auto bg-sky-950">
+      <h2 class="text-center font-medium text-cyan-400 py-3">INTERVIEWS CANDIDATE</h2>
       <input type="text" class="input" placeholder="Position" v-model="interview.position"/>
       <input
         type="text"
@@ -80,7 +79,7 @@ const saveInterview = async ():Promise<void> => {
       <input type="text" class="input" placeholder="WhatsApp" v-model="interview.whatsappCandidate"/>
       <input type="text" class="input" placeholder="Telegram" v-model="interview.telegramCandidate"/>
 
-      <label class="font-medium mt-2">Salary</label>
+      <label class="font-medium mt-2 text-cyan-400">Salary</label>
       <div class="flex items-center gap-4 my-3">
         <input type="number" class="input-num" placeholder="salary from" v-model="interview.salaryFrom"/>
         <span class="pi pi-dollar money-icon"></span>
@@ -92,9 +91,9 @@ const saveInterview = async ():Promise<void> => {
       <template v-if="interview.stages">
       <div
         v-for="(stage , index) in interview.stages" :key="index"
-        class="flex flex-col border-2 border-slate-400 my-5 py-6 px-3 rounded-lg"
+        class="flex flex-col border border-cyan-400 my-5 py-6 px-3 rounded-lg"
       >
-        <label :for="`stage-nameStage-${index}`"><span class="pi pi-file-edit mb-2 mr-2"></span>Name stage</label>
+        <label :for="`stage-nameStage-${index}`" class="text-cyan-400"><span class="pi pi-file-edit mb-2 mr-2 text-cyan-400"></span>Name stage</label>
         <div class="flex justify-center mt-2">
           <input
             type="text"
@@ -105,27 +104,27 @@ const saveInterview = async ():Promise<void> => {
           />
         </div>
 
-        <label :for="`stage-comments-${index}`"><span class="pi pi-book mb-2 mr-2"></span>Comments</label>
+        <label :for="`stage-comments-${index}`" class="text-cyan-400"><span class="pi pi-book mb-2 mr-2 text-cyan-400"></span>Comments</label>
         <div class="flex justify-center my-3">
           <textarea class="textarea" placeholder="your comments ..." v-model="stage.comments" :id="`stage-comments-${index}`"></textarea>
         </div>
         <button class="btn-delete" @click="deleteStage(index)">
-          <span class="pi pi-times mr-5"></span>Delete stage
+          <span class="pi pi-times mr-5 rotate-360"></span>Delete stage
         </button>
       </div>
     </template>
-      <div class="flex flex-wrap gap-3">
+      <div class="flex flex-wrap gap-3 mt-3">
         <div class="flex align-items-center">
-          <app-radio inputId="interviewResult2" value="оффер" name="result" v-model="interview.result"/>
-          <label for="ingredient1" class="ml-2">оффер</label>
+          <app-radio inputId="interviewResult1" value="Offer" name="result" v-model="interview.result"/>
+          <label for="ingredient1" class="ml-2">Offer</label>
         </div>
         <div class="flex align-items-center">
-          <app-radio inputId="interviewResult1" value="отказ" name="result" v-model="interview.result"/>
-          <label for="ingredient1" class="ml-2">отказ</label>
+          <app-radio inputId="interviewResult2" value="Refusal" name="result" v-model="interview.result"/>
+          <label for="ingredient2" class="ml-2">Refusal</label>
         </div>
        
       </div>
-      <button class="btn-save" @click="saveInterview">
+      <button class="btn" @click="saveInterview">
         <span class="pi pi-check mr-5"></span>Save
       </button>
     </div>

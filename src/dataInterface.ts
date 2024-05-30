@@ -10,7 +10,7 @@ export interface IDataInterviews {
  salaryFrom?: number
  salaryTo?: number
  stages?: IDataStage[]
- result: 'Offer' | 'Refusal'
+ result?: 'Offer' | 'Refusal'
 }
 
 export interface IDataStage {

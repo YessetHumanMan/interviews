@@ -52,9 +52,9 @@ const disabledInterviews = computed<boolean>(() => {
   <app-spinner v-if="isLoading" />
   <div
     v-else="interview?.id && !isLoading"
-    class="w-1/2 mx-auto py-6 border border-slate-400 mt-10 shadow-xl rounded-md"
+    class="w-1/2 mx-auto py-6 bg-sky-950 border border-cyan-400 mt-10 shadow-xl rounded-md"
   >
-    <h2 class="text-center font-medium">New interview</h2>
+    <h2 class="text-center font-medium text-sm text-cyan-400">NEW INTERVIEWS</h2>
     <div class="flex flex-col p-5 gap-1">
       <input
         class="input"

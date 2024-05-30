@@ -1,22 +1,16 @@
-
 export default {
-  content: ["./index.html",
-  "./src/**/*.{vue,js,ts,jsx,tsx}",],
+  content: ["./index.html", "./src/**/*.{vue,js,ts,jsx,tsx}"],
   theme: {
-    fontFamily: { 
-      'sans': ['Niramit', 'Sans-serif'] 
+    fontFamily: {
+      sans: ["Niramit", "Sans-serif"],
     },
     screens: {
-      'large': '1170px'
+      large: "1170px",
     },
     container: {
-      center: true
+      center: true,
     },
-    extend: {
-         
-       
-    },
+    extend: {},
   },
   plugins: [],
-}
-
+};

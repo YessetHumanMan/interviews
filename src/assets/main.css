@@ -14,7 +14,7 @@
 
 @layer components {
   .btn {
-    @apply text-sm text-slate-900 py-2 px-4 bg-slate-200 rounded-lg hover:bg-slate-400 hover:text-slate-100 transition duration-150 focus:outline-none focus:ring focus:ring-slate-600 active:bg-slate-900;
+    @apply text-sm font-medium text-sky-950 py-2 px-4 bg-pink-600 rounded-lg hover:bg-cyan-400 hover:text-slate-100 transition duration-150 focus:outline-none focus:ring focus:ring-slate-600 active:bg-slate-900;
   }
 
   .btn-save {
@@ -22,25 +22,34 @@
   }
 
   .btn-delete {
-    @apply text-sm text-slate-900 py-2 px-4 bg-red-400 rounded-lg hover:bg-red-600 hover:text-slate-100 transition duration-150 focus:outline-none focus:ring focus:ring-slate-600 active:bg-slate-900;
+    @apply text-sm text-slate-900 py-2 px-4 bg-red-800 rounded-lg hover:bg-red-600 hover:text-slate-100 transition duration-150 focus:outline-none focus:ring focus:ring-slate-600 active:bg-slate-900;
   }
 
   .input {
-    @apply border-2 border-slate-400 rounded-sm py-1 px-2 hover:border-slate-500 bg-slate-50
+    @apply bg-sky-950 border text-cyan-400 outline-none border-cyan-400 rounded-sm py-1 px-2 hover:border-pink-400
   }
 
   .input-num {
-    @apply border-2 border-slate-400 rounded-sm px-2 hover:border-slate-500 bg-slate-50
+    @apply border-2 border-cyan-400 rounded-sm px-2 hover:border-pink-600 bg-sky-950 text-cyan-400
   }
 
   .input-task {
-    @apply w-10/12 border border-slate-400 rounded-sm px-2 hover:border-slate-500 bg-slate-50
+    @apply w-10/12 border border-cyan-400 rounded-sm px-2 hover:border-pink-500 bg-sky-950 text-cyan-400 
   }
 
   .textarea {
-    @apply w-10/12 border border-slate-400 rounded-sm px-2 py-2 hover:border-slate-500 h-32 text-ellipsis bg-slate-50
+    @apply w-10/12 border border-cyan-400 rounded-sm px-2 py-2 hover:border-pink-500 h-32 text-ellipsis bg-sky-950 text-cyan-400 outline-none
     resize-none
   }
+
+  .btn-filter-apply {
+    @apply text-white text-white bg-cyan-500 w-20 rounded-lg hover:bg-cyan-300 transition
+  }
+
+  .btn-filter-reset {
+    @apply text-white bg-pink-500 w-20 rounded-lg hover:bg-red-300 transition
+  }
+
 
   
 }
