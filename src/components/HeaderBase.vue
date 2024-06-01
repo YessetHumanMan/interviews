@@ -43,31 +43,54 @@ const items = ref<IMenuBase[]>([
   }
 ]);
 
+const isActive = (url:string) => {
+      return router.currentRoute.value.path === url;
+    };
+
+
+
 const signOutBtn = async ():Promise<void> => {
   await signOut(getAuth())
   router.push('/auth')
 }
-
 </script>
 
 <template>
-  <header class="container flex justify-between py-7 px-3 bg-sky-950 mt-4 rounded-lg border border-cyan-400">
-    <a href="/"><img src="/public/int-icon.jpg" width="50" height="50" class="rounded-full border-2 border-cyan-400" alt=""></a>
+  <header
+    class="container flex justify-between py-7 px-3 bg-sky-950 mt-4 rounded-lg border border-cyan-400"
+  >
+    <a href="/"
+      ><img
+        src="/public/int-icon.jpg"
+        width="50"
+        height="50"
+        class="rounded-full border-2 border-cyan-400"
+        alt=""
+    /></a>
     <div
       v-for="item in items"
       :key="item.name"
       class="font-medium uppercase text-sm text-cyan-400 transition hover:text-pink-600 mr-10"
     >
-    <router-link :to="item.url">
-      <div v-if="item.show">
-      <span :class="item.icon" class="m-3"></span>
-        <span>{{ item.name }}</span>
-      </div>
-    </router-link>
-      
+      <router-link :to="item.url">
+        <div v-if="item.show">
+          <span :class="item.icon" class="m-3"></span>
+          <span
+            :class="[
+              'text-cyan-400',
+              isActive(item.url) ? 'text-pink-500' : 'text-cyan-400',
+            ]"
+            >{{ item.name }}</span
+          >
+        </div>
+      </router-link>
     </div>
     <div>
-      <span v-if="userStore.userId" @click="signOutBtn" class="text-pink-500 pi pi-sign-out cursor-pointer m-3 transition hover:text-pink-300 hover:translate-x-2"></span>
+      <span
+        v-if="userStore.userId"
+        @click="signOutBtn"
+        class="text-pink-500 pi pi-sign-out cursor-pointer m-3 transition hover:text-pink-300 hover:translate-x-2"
+      ></span>
     </div>
   </header>
 </template>

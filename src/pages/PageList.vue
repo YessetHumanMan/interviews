@@ -41,7 +41,6 @@ const getAllInterview = async <T extends IDataInterviews>(isFilter?: boolean ): 
   }
   
   const getDocsList = await getDocs(getData);
-isLoading.value = false
   return getDocsList.docs.map((doc) => doc.data() as T);
 };
 
@@ -56,7 +55,7 @@ const submitFiler = async (): Promise<void> => {
 }
 
 const deleteFiler = async (): Promise<void> => {
-  const listInterview: Array<IDataInterviews> = await getAllInterview(false);
+  const listInterview: Array<IDataInterviews> = await getAllInterview();
   interviews.value = listInterview;
 }
 
@@ -75,6 +74,7 @@ const deliteCurrentInterview = async (id: string): Promise<void> => {
   <div class="container">
     <div v-if="!interviews.length" class="flex justify-center">
     <app-spinner v-if="isLoading"/>
+    <span v-else-if="interviews.length === 0" class="text-cyan-400 text-lg mt-5"><span class="pi pi-times-circle text-red-700 mr-2 text-lg"></span> NO INTERVIEWS</span>
     </div>
     <div v-else class="bg-sky-950 border border-cyan-400 rounded mt-5 shadow-lg py-4">
       <h1 class="font-medium text-ml text-cyan-400 my-3 mx-3 border-b border-b-cyan-800 pb-1"><span class="pi pi-list-check mr-3"></span>LIST INTERVIEWS</h1>

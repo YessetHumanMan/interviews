@@ -9,6 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "chart.js": "^4.4.3",
     "datejs": "^1.0.0-rc3",
     "dayjs": "^1.11.11",
     "firebase": "^10.11.1",

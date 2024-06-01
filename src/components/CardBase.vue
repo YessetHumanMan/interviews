@@ -49,7 +49,7 @@ const disabledInterviews = computed<boolean>(() => {
 </script>
 
 <template>
-  <app-spinner v-if="isLoading" />
+  <app-spinner v-if="isLoading" class="mx-auto"/>
   <div
     v-else="interview?.id && !isLoading"
     class="w-1/2 mx-auto py-6 bg-sky-950 border border-cyan-400 mt-10 shadow-xl rounded-md"
