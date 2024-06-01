@@ -14,7 +14,7 @@
 
 @layer components {
   .btn {
-    @apply text-sm font-medium text-sky-950 py-2 px-4 bg-pink-600 rounded-lg hover:bg-cyan-400 hover:text-slate-100 transition duration-150 focus:outline-none focus:ring focus:ring-slate-600 active:bg-slate-900;
+    @apply text-sm font-medium text-sky-950 py-2 px-4 bg-cyan-400 rounded-lg hover:bg-cyan-600 hover:text-slate-100 transition duration-150 focus:outline-none focus:ring focus:ring-slate-600 active:bg-slate-900;
   }
 
   .btn-save {
@@ -22,7 +22,7 @@
   }
 
   .btn-delete {
-    @apply text-sm text-slate-900 py-2 px-4 bg-red-800 rounded-lg hover:bg-red-600 hover:text-slate-100 transition duration-150 focus:outline-none focus:ring focus:ring-slate-600 active:bg-slate-900;
+    @apply text-sm text-slate-900 py-2 px-4 bg-red-500 rounded-lg hover:bg-red-600 hover:text-slate-100 transition duration-150 focus:outline-none focus:ring focus:ring-slate-600 active:bg-slate-900;
   }
 
   .input {
