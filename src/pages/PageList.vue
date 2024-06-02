@@ -10,13 +10,14 @@ import {
   where
 } from "firebase/firestore";
 import { IDataInterviews } from "../dataInterface";
-import { onMounted } from "vue";
+import { computed, onMounted } from "vue";
 import { ref } from "vue";
 import { useUserStore } from "../store/user";
 
 const userStore = useUserStore();
 const isLoading = ref(true);
-const selectedFilterResalt = ref<string>('');
+const selectedFilterResult = ref<string>('');
+const selectedName = ref<string>('')
 
 const db = getFirestore();
 
@@ -30,7 +31,8 @@ const getAllInterview = async <T extends IDataInterviews>(isFilter?: boolean ): 
     getData = query(
       collection(db, `users/${userStore.userId}/interviews`),
       orderBy("createdAt", "desc"),
-      where("result", "==", selectedFilterResalt.value)
+      where("result", "==", selectedFilterResult.value),
+      
     )
   } else {
      getData = query(
@@ -53,6 +55,7 @@ const submitFiler = async (): Promise<void> => {
   const listInterview: Array<IDataInterviews> = await getAllInterview(true);
   interviews.value = listInterview;
 }
+
 
 const deleteFiler = async (): Promise<void> => {
   const listInterview: Array<IDataInterviews> = await getAllInterview();
@@ -86,6 +89,7 @@ const deliteCurrentInterview = async (id: string): Promise<void> => {
           <label for="ingredient2" class="ml-2 text-cyan-400">Refusal</label>
           <button type="button" class="btn-filter-apply" @click="submitFiler()" :disabled="!selectedFilterResalt">Apply</button>
         <button class="btn-filter-reset" @click="deleteFiler()" :disabled="!selectedFilterResalt">Reset</button>
+        <input type="text" v-model="selectedName" class="input-filter" placeholder="Search name...">
         </div>
 
         

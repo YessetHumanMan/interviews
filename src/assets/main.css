@@ -37,6 +37,10 @@
     @apply w-10/12 border border-cyan-400 rounded-sm px-2 hover:border-pink-500 bg-sky-950 text-cyan-400 
   }
 
+  .input-filter {
+    @apply w-10/12 border border-cyan-400 rounded-sm px-2 hover:border-pink-500 bg-sky-950 text-cyan-400 
+  }
+
   .textarea {
     @apply w-10/12 border border-cyan-400 rounded-sm px-2 py-2 hover:border-pink-500 h-32 text-ellipsis bg-sky-950 text-cyan-400 outline-none
     resize-none
