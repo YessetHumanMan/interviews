@@ -10,7 +10,7 @@ import {
   where
 } from "firebase/firestore";
 import { IDataInterviews } from "../dataInterface";
-import { computed, onMounted } from "vue";
+import { onMounted } from "vue";
 import { ref } from "vue";
 import { useUserStore } from "../store/user";
 
@@ -83,12 +83,12 @@ const deliteCurrentInterview = async (id: string): Promise<void> => {
       <h1 class="font-medium text-ml text-cyan-400 my-3 mx-3 border-b border-b-cyan-800 pb-1"><span class="pi pi-list-check mr-3"></span>LIST INTERVIEWS</h1>
       <div class="flex flex-wrap gap-3 mt-3">
         <div class="flex align-items-center ml-3 gap-2 my-3">
-          <app-radio inputId="interviewResult1" value="Offer" name="result" v-model="selectedFilterResalt"/>
+          <app-radio inputId="interviewResult1" value="Offer" name="result" v-model="selectedFilterResult"/>
           <label for="ingredient1" class="ml-2 text-cyan-400">Offer</label>
-          <app-radio inputId="interviewResult2" value="Refusal" name="result" v-model="selectedFilterResalt"/>
+          <app-radio inputId="interviewResult2" value="Refusal" name="result" v-model="selectedFilterResult"/>
           <label for="ingredient2" class="ml-2 text-cyan-400">Refusal</label>
-          <button type="button" class="btn-filter-apply" @click="submitFiler()" :disabled="!selectedFilterResalt">Apply</button>
-        <button class="btn-filter-reset" @click="deleteFiler()" :disabled="!selectedFilterResalt">Reset</button>
+          <button type="button" class="btn-filter-apply" @click="submitFiler()" :disabled="!selectedFilterResult">Apply</button>
+        <button class="btn-filter-reset" @click="deleteFiler()" :disabled="!selectedFilterResult">Reset</button>
         <input type="text" v-model="selectedName" class="input-filter" placeholder="Search name...">
         </div>
 

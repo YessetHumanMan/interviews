@@ -8,12 +8,12 @@ import { useRoute } from 'vue-router'
 const userStore = useUserStore()
 const route = useRoute()
 
-const position = ref<string>('')
-const phoneCandidate = ref('')
-const telegramCandidate = ref('')
-const whatsappCandidate = ref('')
-const salaryFrom = ref('')
-const salaryTo = ref('')
+// const position = ref<string>('')
+// const phoneCandidate = ref('')
+// const telegramCandidate = ref('')
+// const whatsappCandidate = ref('')
+// const salaryFrom = ref('')
+// const salaryTo = ref('')
 
 const db = getFirestore()
 

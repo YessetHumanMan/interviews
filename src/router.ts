@@ -4,7 +4,7 @@ import type { RouteLocationNormalized, NavigationGuardNext } from "vue-router"
 import { getAuth, onAuthStateChanged } from 'firebase/auth'
 
 
-const checkAuth = (to:RouteLocationNormalized, from: RouteLocationNormalized, next: NavigationGuardNext) => {
+const checkAuth = (_to:RouteLocationNormalized, _from: RouteLocationNormalized, next: NavigationGuardNext) => {
   let isAuth = false
 
   onAuthStateChanged(getAuth(), (user) => {

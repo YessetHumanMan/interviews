@@ -9,7 +9,7 @@ import { router } from './router'
 import 'primeicons/primeicons.css'
 import 'primevue/resources/themes/aura-light-green/theme.css'
 import DataTable from "primevue/datatable";
-import Column from "primevue/Column";
+import Column from "primevue/column";
 import Calendar from 'primevue/calendar';
 import RadioButton from 'primevue/radiobutton';
 import ProgressSpinner from 'primevue/progressspinner';
